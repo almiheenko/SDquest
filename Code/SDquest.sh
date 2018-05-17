@@ -29,8 +29,8 @@ javac GetAllSCSegs.java
 java GetAllSCSegs $outdir/genome.masked_all.fasta $outdir/CombineLine.txt $outdir/genome.txt $outdir/AllSegsOfSCN_CRMasked.fasta $outdir/AllSegsOfSCN_CRRemoved.fasta 25
 javac PutativeSDsSeparated.java
 java PutativeSDsSeparated $threads $outdir/AllSegsOfSCN_CRRemoved.fasta $outdir/AllSegsOfSCN_CRMasked.fasta $outdir
-chmod +x Lastz.sh
-./Lastz.sh $threads
+chmod +x Minimap.sh
+./Minimap.sh $threads $outdir
 wait
 cat $outdir/AllSegsOfSCN_CRRemoved*.info > $outdir/AllSegsOfSCN.info
 javac MinimapPost.java

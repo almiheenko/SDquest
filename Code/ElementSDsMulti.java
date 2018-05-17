@@ -39,7 +39,7 @@ public class ElementSDsMulti {
 			in.close();
 //			System.out.println(index);
 	
-			in=new Scanner(new File(args[2])); in.nextLine();  // SCN_LastzResult_500NonCR_NewExtendPec50.txt
+			in=new Scanner(new File(args[2])); in.nextLine();  // SCN_MinimapResult_500NonCR_NewExtendPec50.txt
 			BufferedWriter writer = new BufferedWriter(new FileWriter(new File(args[3])));  // ElementSDs_LengthAndMulti.fasta
 			writer.write("index   chr   start   end   midLength   multi"); writer.newLine();
 			int chr, start, end; 

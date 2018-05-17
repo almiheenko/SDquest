@@ -9,7 +9,7 @@ public class GetIndexesBG {//
 	public static void main(String args[]){
 		try{	
 			long startTime=System.currentTimeMillis();
-			Scanner in=new Scanner(new File(args[0])); in.nextLine(); //"SCN_LastzResult_500NonCR_FilterPair.txt"
+			Scanner in=new Scanner(new File(args[0])); in.nextLine(); //"SCN_MinimapResult_500NonCR_FilterPair.txt"
 			BufferedWriter writer = new BufferedWriter(new FileWriter(new File(args[1])));  //"BG_SDIndexes.fasta"	
 			String[] onepair;
 			while(in.hasNextLine()){

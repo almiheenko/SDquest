@@ -371,7 +371,7 @@ public class CopyEndPoints {
 			String[] alignment=new String[2]; String[] alignS=new String[2]; String[] alignE=new String[2];
 			while(copy){
 				copy=false; num++;
-				in=new Scanner(new File(args[2])); in.nextLine();  //"SCN_LastzResult_500NonCR_NewExtendPec50.txt"
+				in=new Scanner(new File(args[2])); in.nextLine();  //"SCN_MinimapResult_500NonCR_NewExtendPec50.txt"
 				index=0;
 				while(in.hasNextLine()){
 					onepair=in.nextLine().trim().split("[\\p{Space}]+"); index++;

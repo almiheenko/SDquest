@@ -48,7 +48,7 @@ public class changeFormatPairwise {
 			in.close(); inChr.close();
 //			System.out.println("end reading! "+chrs.size()+"  "+segs.size());
 			
-			in=new Scanner(new File(args[2])); // SCN_LastzResult_500NonCR_NewExtendPec50.txt
+			in=new Scanner(new File(args[2])); // SCN_MinimapResult_500NonCR_NewExtendPec50.txt
 			String outdir = args[3];
 			BufferedWriter writer=new BufferedWriter (new FileWriter(new File(outdir, "Pairwise_SDs.txt")));
 			BufferedWriter writerBG=new BufferedWriter (new FileWriter(new File(outdir, "BG_SDIndexes.fasta")));

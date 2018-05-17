@@ -431,7 +431,7 @@ public class NewExtendPec50 {
 			inSeg.close();
 //			System.out.println("end reading 2 "+p+"  "+segsCR.get(0).length());
 			
-			Scanner in = new Scanner (new File(args[2]));  String temp=in.nextLine(); String[] onepair;  //"SCN_LastzResult_500NonCR_FilterPair.txt"
+			Scanner in = new Scanner (new File(args[2]));  String temp=in.nextLine(); String[] onepair;  //"SCN_MinimapResult_500NonCR_FilterPair.txt"
 			String otherChr="", chr="", otherChrCR="", chrCR=""; int curChr, curOtherChr;
 			int start1,end1,start2,end2,s1,e1,s2,e2; int extendS1, extendE1, extendS2, extendE2; String[] cigarS=new String[5]; String[] cigarE=new String[5]; int CR1, CR2;
 			String strand1, strand2;
@@ -441,9 +441,9 @@ public class NewExtendPec50 {
 			ArrayList<String> align1=new ArrayList<String>(); ArrayList<String> align2=new ArrayList<String>(); ArrayList<Double> Pec=new ArrayList<Double>(); double sumPec; int extendNum;
 			String finalSeg1="", finalSeg2=""; int numCR1=0, numCR2=0, finalM, finalMis, finalSgap, finalNgap; double identity; int newStart1, newEnd1, newStart2, newEnd2;
 			
-			BufferedWriter writer = new BufferedWriter(new FileWriter(new File(args[3])));  //"SCN_LastzResult_500NonCR_NewExtendPec50.txt"
+			BufferedWriter writer = new BufferedWriter(new FileWriter(new File(args[3])));  //"SCN_MinimapResult_500NonCR_NewExtendPec50.txt"
 			writer.write(temp+"  extendS1  extendE1  extendS2  extendE2  cigarS  cigarE  Identity"); writer.newLine();  int indexW=0;
-//			BufferedWriter writerBG = new BufferedWriter(new FileWriter(new File(args[4])));  //"SCN_LastzResult_500NonCR_BG.txt"
+//			BufferedWriter writerBG = new BufferedWriter(new FileWriter(new File(args[4])));  //"SCN_MinimapResult_500NonCR_BG.txt"
 //			writerBG.write(temp); writerBG.newLine(); 
 			String[] alignment=new String[2]; String[] newCigar=new String[5]; int length=chr.length(), otherLength=otherChr.length(); String str1,str2;// strCR1="", strCR2=""; 
 			
