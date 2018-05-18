@@ -64,7 +64,7 @@ public class testLength {//
             e.printStackTrace();
         }
 		catch(Exception e){
-			
+			e.printStackTrace();
 		}
 	}
 

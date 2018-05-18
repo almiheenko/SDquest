@@ -3,9 +3,7 @@ number="$1"
 outdir="$2"
 cd minimap2
 make
-for ((i=1; i<=number; i++)); do
-        ./minimap2 $outdir/AllSegsOfSCN_CRRemoved.fasta $outdir/AllSegsOfSCN_CRRemoved$i.fasta -c -X -E1,0 -O2,32 -w1 -t 2 --min-occ-floor 200 > $outdir/AllSegsOfSCN_CRRemoved$i.info &
-done
-wait
 cd ..
+./minimap2/minimap2 $outdir/AllSegsOfSCN_CRRemoved.fasta $outdir/AllSegsOfSCN_CRRemoved.fasta -c -X -w1 -t16 --min-occ-floor 200 > $outdir/AllSegsOfSCN.info
+wait
 echo end minimap alignments of putative SDs

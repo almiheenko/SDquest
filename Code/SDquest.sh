@@ -3,7 +3,7 @@ set outdir = $argv[1]
 set genome = $argv[2]
 set maskedgenome = $argv[3]
 set threads = $argv[4]
-echo Creating $outdir
+echo Creating $outdir output folder
 mkdir $outdir
 cp $genome $outdir/genome.fa
 cp $maskedgenome $outdir/genome.masked.fa
@@ -27,12 +27,9 @@ javac CombineLine.java
 java CombineLine $outdir/FrequencyLine.txt $outdir/genome.txt $outdir/CombineLine.txt
 javac GetAllSCSegs.java
 java GetAllSCSegs $outdir/genome.masked_all.fasta $outdir/CombineLine.txt $outdir/genome.txt $outdir/AllSegsOfSCN_CRMasked.fasta $outdir/AllSegsOfSCN_CRRemoved.fasta 25
-javac PutativeSDsSeparated.java
-java PutativeSDsSeparated $threads $outdir/AllSegsOfSCN_CRRemoved.fasta $outdir/AllSegsOfSCN_CRMasked.fasta $outdir
 chmod +x Minimap.sh
 ./Minimap.sh $threads $outdir
 wait
-cat $outdir/AllSegsOfSCN_CRRemoved*.info > $outdir/AllSegsOfSCN.info
 javac MinimapPost.java
 java MinimapPost $outdir/AllSegsOfSCN_CRMasked.fasta $outdir/AllSegsOfSCN.info $outdir/SCN_MinimapResult.txt
 javac FilterAlignmentsWith500NonCR.java
@@ -47,7 +44,7 @@ java Recover $outdir/SCN_MinimapResult_500NonCRfiltered.txt $outdir/SCN_MinimapR
 javac NewExtendPec50.java
 java NewExtendPec50 $outdir/genome.masked_all.fasta $outdir/genome.txt $outdir/SCN_MinimapResult_500NonCR_FilterPair.txt $outdir/SCN_MinimapResult_500NonCR_NewExtendPec50.txt
 javac changeFormatPairwise.java
-java changeFormatPairwise $outdir/genome.masked_all.fasta $outdir/genome_size_Indexes.txt $outdir/SCN_MinimapResult_500NonCR_NewExtendPec50.txt
+java changeFormatPairwise $outdir/genome.masked_all.fasta $outdir/Genome_size_Indexes.txt $outdir/SCN_MinimapResult_500NonCR_NewExtendPec50.txt $outdir
 echo End pairwise SDs detection. Begin analyze mosaic SDs.
 javac CopyEndPoints.java
 java CopyEndPoints $outdir/genome.masked_all.fasta $outdir/BG_SDIndexes.fasta $outdir/SCN_MinimapResult_500NonCR_NewExtendPec50.txt $outdir/EndpointsLine.txt
@@ -55,17 +52,17 @@ sort -n -k 1 -k 2 -k 3 $outdir/BG_SDIndexes.fasta > BG_SDIndexes.sorted.fasta
 javac MergeBG.java
 java MergeBG BG_SDIndexes.sorted.fasta $outdir/BG_MosaicSDs.fasta
 javac ElementSDs.java
-java ElementSDs $outdir/genome.masked_all.fasta $outdir/EndpointsLine.txt $outdir/BG_MosaicSDs.fasta
+java ElementSDs $outdir/genome.masked_all.fasta $outdir/EndpointsLine.txt $outdir/BG_MosaicSDs.fasta $outdir
 javac testLength.java
-java testLength $outdir/genome.masked_all.fasta $outdir/SCN_MinimapResult_500NonCR_NewExtendPec50.txt
+java testLength $outdir/genome.masked_all.fasta $outdir/SCN_MinimapResult_500NonCR_NewExtendPec50.txt $outdir/length.fasta
 javac NewElementSDsPair.java
-java NewElementSDsPair $outdir/genome.masked_all.fasta $outdir/genome.txt $outdir/ClustersLine.txt $outdir/ElementSDs_100.fasta $outdir/SCN_MinimapResult_500NonCR_NewExtendPec50.txt $outdir
+java NewElementSDsPair $outdir/genome.masked_all.fasta $outdir/genome.txt $outdir/ClustersLine.txt $outdir/ElementSDs_100.fasta $outdir/length.fasta $outdir/SCN_MinimapResult_500NonCR_NewExtendPec50.txt $outdir
 javac SDblock.java
 java SDblock $outdir/ElementSDs_100.fasta $outdir/ElementSDs_pairwiseEqual.fasta $outdir
 javac ElementSDsMulti.java
-java ElementSDsMulti $outdir/genome_size_Indexes.txt $outdir/ElementSDs_100.fasta $outdir/SCN_MinimapResult_500NonCR_NewExtendPec50.txt $outdir/ElementSDs_LengthAndMulti.fasta
+java ElementSDsMulti $outdir/Genome_size_Indexes.txt $outdir/ElementSDs_100.fasta $outdir/SCN_MinimapResult_500NonCR_NewExtendPec50.txt $outdir/ElementSDs_LengthAndMulti.fasta
 javac MosaicSDsBlockcompose.java
-java MosaicSDsBlockcompose $outdir/genome_size_Indexes.txt $outdir/MosaicSDs_SDblockIndexes.txt $outdir/ElementSDs_LengthAndMulti.fasta $outdir/blocks.fasta $outdir/BG_MosaicSDs.fasta
+java MosaicSDsBlockcompose $outdir/Genome_size_Indexes.txt $outdir/MosaicSDs_SDblockIndexes.txt $outdir/ElementSDs_LengthAndMulti.fasta $outdir/blocks.fasta $outdir/BG_MosaicSDs.fasta
 mkdir $outdir/tmp
 mv $outdir/ElementSDs*.fasta $outdir/tmp/
 mv $outdir/length.fasta $outdir/tmp/
@@ -73,13 +70,15 @@ mv $outdir/Clusters_100.fasta $outdir/tmp/
 mv $outdir/BadMosaicSD_100.fasta $outdir/tmp/
 mv $outdir/BG*.fasta $outdir/tmp/
 mv $outdir/AllSegsOfSCN*.fasta $outdir/tmp/
+mv $outdir/*.fa $outdir/tmp/
 mv $outdir/*.fasta $outdir/tmp/
+mv $outdir/*.info $outdir/tmp/
 mv $outdir/genome*.txt $outdir/tmp/
 mv $outdir/Genome_size_Indexes.txt $outdir/tmp/
 mv $outdir/*.h5 $outdir/tmp/
 mv $outdir/FrequencyLine.txt $outdir/tmp/
 mv $outdir/CombineLine.txt $outdir/tmp/
 mv $outdir/EndpointsLine.txt $outdir/tmp/
-mv $outdir/SCN_LastzResult_500NonCR_NewExtendPec50.txt $outdir/tmp/
+mv $outdir/SCN_MinimapResult* $outdir/tmp/
 mv $outdir/ClustersLine.txt $outdir/tmp/
 echo end SDquest analysis

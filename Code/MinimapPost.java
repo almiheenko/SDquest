@@ -123,12 +123,13 @@ public class MinimapPost {
 					}
 					else{
 						seg1=Integer.parseInt(onepair[5]); seg2=Integer.parseInt(onepair[0]);
-						start1=Integer.parseInt(onepair[7]); end1=Integer.parseInt(onepair[8]); start2=Integer.parseInt(onepair[2]); end2=Integer.parseInt(onepair[3]);
+						start1=Integer.parseInt(onepair[7]); end1=Integer.parseInt(onepair[8]);  // reverse alignment
+						start2=Integer.parseInt(onepair[2]); end2=Integer.parseInt(onepair[3]);
 						strand=onepair[4];
                         if(seg1 != seg2 || start2 > end1 || start1 > end2){
 							writer.write(index+"  "+cigar+"  "+seg1+"  "+seg2+"  ");
 							if(strand.equalsIgnoreCase("+")){
-								System.out.println(SegsIndex.get(seg1)[0]+"  "+(SegsIndex.get(seg1)[1]+recover(Segs.get(seg1), start1))+"  "+(SegsIndex.get(seg1)[1]+recover(Segs.get(seg1),(end1-1))+1)+"  ");
+								writer.write(SegsIndex.get(seg1)[0]+"  "+(SegsIndex.get(seg1)[1]+recover(Segs.get(seg1), start1))+"  "+(SegsIndex.get(seg1)[1]+recover(Segs.get(seg1),(end1-1))+1)+"  ");
 							}
 							else{
 								length=Integer.parseInt(onepair[6]);
@@ -136,7 +137,7 @@ public class MinimapPost {
 								int rev_end1=length-start1;
 								writer.write(SegsIndex.get(seg1)[0]+"  "+(SegsIndex.get(seg1)[1]+reverseRecover(Segs.get(seg1),(rev_end1-1)))+"  "+(SegsIndex.get(seg1)[1]+reverseRecover(Segs.get(seg1),rev_start1)+1)+"  ");
 							}
-							System.out.println(SegsIndex.get(seg2)[0]+"  "+(SegsIndex.get(seg2)[1]+recover(Segs.get(seg2), start2))+"  "+(SegsIndex.get(seg2)[1]+recover(Segs.get(seg2),(end2-1))+1)+"  ");
+							writer.write(SegsIndex.get(seg2)[0]+"  "+(SegsIndex.get(seg2)[1]+recover(Segs.get(seg2), start2))+"  "+(SegsIndex.get(seg2)[1]+recover(Segs.get(seg2),(end2-1))+1)+"  ");
 							mismatches = Integer.parseInt(onepair[12].replace("NM:i:", ""));
 							writer.write(onepair[9]+"  "+ (mismatches - gapLength(cigar)) +"  "+gapNumber(cigar)+"  "+gapLength(cigar)+"  +  " + strand);
 							writer.newLine();  index++;
